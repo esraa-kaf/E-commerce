@@ -23,7 +23,7 @@ class CategoriesService{
     if(category){
         res.status(200).json({data:category});
     }else{
-        res.status(404).json({message:'category not found'});
+        res.status(404).json(`${req.__('not_found')}`);
     }
  }
 
