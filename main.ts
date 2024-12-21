@@ -2,6 +2,9 @@ import express from 'express'
 import dotenv from 'dotenv'
 import i18n from 'i18n'
 import cors from 'cors';
+import compression from 'compression'
+import helmet from 'helmet';
+import expressMongoSanitize from 'express-mongo-sanitize'
 import cookieParser from 'cookie-parser'
 import dbConnection from './src/config/database';
 import mountRoutes from './src';
@@ -14,6 +17,9 @@ app.use (cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
 }))
+app.use(expressMongoSanitize());
+app.use(helmet({crossOriginResourcePolicy: {policy: 'same-site'}}));
+app.use(compression())
 app.use(cookieParser())
 dotenv.config()
 app.use(express.static('upload'))
