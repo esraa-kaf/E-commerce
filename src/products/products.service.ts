@@ -9,8 +9,8 @@ class ProductsService{
 
     createOne=refactorService.createOne<products>(productsSchema);
     getAll= refactorService.getAll<products>(productsSchema);
-    getOne= refactorService.getOne<products>(productsSchema);
-    updateOne=refactorService.updateOne<products>(productsSchema);
+    getOne= refactorService.getOne<products>(productsSchema ,'products','reviews');
+    updateOne=refactorService.updateOne<products>(productsSchema );
     deleteOne=refactorService.deleteOne<products>(productsSchema);
 
     // uploadImages = uploadSingleFile(['image'], 'cover')

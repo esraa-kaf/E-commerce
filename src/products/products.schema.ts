@@ -16,8 +16,9 @@ const productsSchema = new mongoose.Schema<products>({
     rating: { type: Number, default: 0 },
     cover: String,
     images: [String]
-}, { timestamps: true });
+}, {toJSON: {virtuals: true}, toObject: {virtuals: true},timestamps: true });
 
+productsSchema.virtual('reviews', {localField: '_id', foreignField: 'product', ref: 'reviews'})
 const imagesUrl = (document: products) => {
     if (document.cover) document.cover = `${process.env.BASE_URL}/images/products/${document.cover}`;
     if (document.images) document.images = document.images.map(image => `${process.env.BASE_URL}/images/products/${image}`);

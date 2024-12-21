@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler';
 import{Request ,Response ,NextFunction }from 'express'
 import ApiErrors from './utils/api.Errors';
 import Features from './utils/features';
+import sanitization from './utils/sanitization';
 class RefactorService{
 
 // create categories
@@ -27,11 +28,14 @@ class RefactorService{
 })
 
 // get one category
-  getOne= <modelType>(model:mongoose.Model<any>)=>
+  getOne= <modelType>(model:mongoose.Model<any>, modelName?: string, populationOptions?: string)=>
     asyncHandler(async (req:Request , res:Response ,next:NextFunction)=>{
-    const document:modelType | null = await model.findById(req.params.id);
-    if(!document)return next (new ApiErrors(`${req.__('not_found')}`,404))
-        res.status(200).json({data:document});
+        let query: any = model.findById(req.params.id);
+        if (populationOptions) query = query.populate(populationOptions);
+        let document: any = await query;
+        if (!document) return next(new ApiErrors(`${req.__('not_found')}`, 404));
+        if (modelName === 'users') document = sanitization.User(document)
+        res.status(200).json({data: document});
     }
  )
 
@@ -42,6 +46,7 @@ class RefactorService{
     asyncHandler( async (req:Request , res:Response)=>{
     const documents:modelType|null = await model.findByIdAndUpdate(req.params.id, req.body,{new:true});
     res.status(200).json({data:documents});
+    
 
 })
 // delete category
