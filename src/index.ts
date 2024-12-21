@@ -12,6 +12,7 @@ import wishlistRouter from './wishlist/wishlist.routes';
 import addressRouter from './address/address.routes';
 import reviewsRouter from './reviews/review.routes';
 import couponsRouter from './coupons/coupons.routes';
+import cartsRouter from './cart/carts.routes';
 
 declare module "express" {
   interface Request {
@@ -32,6 +33,7 @@ const mountRoutes=(app: express.Application)=>{
     app.use('/api/v1/address',addressRouter)
     app.use('/api/v1/review',reviewsRouter)
     app.use('/api/v1/coupons',couponsRouter)
+    app.use('/api/v1/carts',cartsRouter)
     app.use('*',( req: express.Request, res: express.Response, next: express.NextFunction)=>{
      
       next(new ApiErrors(`route ${req.originalUrl} not found` , 400));

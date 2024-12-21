@@ -9,7 +9,7 @@ couponsRouter.use(authService.protectedRoutes, authService.checkActive, authServ
 couponsRouter.post('/', couponsValidation.createOne, couponsService.createOne)
 couponsRouter.get('/', couponsService.getAll)
 couponsRouter.get('/:id',couponsValidation.getOne, couponsService.getOne)
-couponsRouter.put('/:id',,couponsValidation.updateOne ,couponsService.updateOne)
+couponsRouter.put('/:id',couponsValidation.updateOne ,couponsService.updateOne)
 couponsRouter.delete('/:id',couponsValidation.deleteOne , couponsService.deleteOne)
 
 
